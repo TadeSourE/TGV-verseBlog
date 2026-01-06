@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// 模拟一些画廊数据（以后可以改成从 content collection 读取）
+const artworks = [
+    { title: "Bg-day", src: "/images/wallhaven-zywzdy_1920x1080.png", tag: "Arknights" },
+    { title: "Bg-night", src: "/images/wallhaven-x6l7vv_1920x1080.png", tag: "Arknights" },
+    { title: "Neon", src: "https://w.wallhaven.cc/full/ne/wallhaven-ne7lr8.jpg", tag: "Sketch" },
+];
+---
+
+<Layout title="画廊 | Gallery">
+    <main class="pt-32 px-4 max-w-7xl mx-auto min-h-screen">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold mb-4">ARTWORKS</h1>
+            <p class="opacity-60">插画收集和艺术参考</p>
+        </div>
+
+        <!-- 瀑布流布局核心代码 -->
+        <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            
+            {artworks.map((art) => (
+                <div class="break-inside-avoid relative group rounded-xl overflow-hidden glass-panel border-0 p-0">
+                    <img src={art.src} alt={art.title} class="w-full h-auto transform transition-transform duration-700 group-hover:scale-110" />
+                    
+                    <!-- 悬停显示的遮罩层 -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <span class="text-acg-pink text-xs font-bold tracking-wider">{art.tag}</span>
+                        <h3 class="text-white text-xl font-bold">{art.title}</h3>
+                    </div>
+                </div>
+            ))}
+
+        </div>
+    </main>
+</Layout>

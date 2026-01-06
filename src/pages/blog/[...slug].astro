@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+// 1. 告诉 Astro 我们有哪些文章，需要生成哪些路径
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+
+// 2. 获取当前页面的文章数据
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<!-- 3. 渲染文章 -->
+<BlogPost {...post.data}>
+	<Content />
+</BlogPost>

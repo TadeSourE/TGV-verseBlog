@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const tools = [
+  { name: 'ChatGPT', icon: '🤖', desc: 'AI 助手', link: 'https://chat.openai.com' },
+  { name: 'Vercel', icon: '▲', desc: '项目部署', link: 'https://vercel.com' },
+  { name: 'Excalidraw', icon: '✏️', desc: '手绘白板', link: 'https://excalidraw.com' },
+  { name: 'Huaban', icon: '🌸', desc: '采集灵感', link: 'https://huaban.com' },
+];
+---
+
+<Layout title="工具箱 | Tools">
+    <main class="pt-32 px-4 md:px-20 max-w-6xl mx-auto min-h-screen">
+        <h1 class="text-4xl font-bold mb-2">工具箱</h1>
+        <p class="mb-10 opacity-75">快速访问我的常用开发与设计工具。</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {tools.map((tool) => (
+                <a href={tool.link} target="_blank" class="glass-panel p-5 rounded-xl flex items-center gap-4 hover:scale-[1.02] active:scale-95 transition-transform">
+                    <div class="w-12 h-12 flex items-center justify-center bg-white/20 rounded-full text-2xl shadow-inner">
+                        {tool.icon}
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">{tool.name}</h3>
+                        <p class="text-xs opacity-70">{tool.desc}</p>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </main>
+</Layout>

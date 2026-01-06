@@ -1,0 +1,49 @@
+---
+import Layout from './Layout.astro';
+
+// 接收文章的属性
+const { title, description, pubDate, heroImage } = Astro.props;
+
+// 格式化日期的辅助函数
+const formattedDate = pubDate.toLocaleDateString('zh-CN', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<Layout title={title}>
+	<main class="pt-24 px-4 md:px-0 max-w-4xl mx-auto min-h-screen">
+		<!-- 文章容器：更深的玻璃质感 -->
+		<article class="glass-panel rounded-3xl overflow-hidden mb-20 animate-float" style="animation-duration: 8s;">
+			
+			<!-- 顶部大图 -->
+			{heroImage && (
+				<div class="w-full h-64 md:h-96 overflow-hidden relative">
+					<img src={heroImage} alt="" class="w-full h-full object-cover" />
+					<!-- 图片底部的渐变遮罩，让文字过渡自然 -->
+					<div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white/80 dark:from-slate-900/80 to-transparent"></div>
+				</div>
+			)}
+			
+			<!-- 文章头部信息 -->
+			<div class="px-6 md:px-12 pt-8 pb-4 text-center">
+				<div class="text-sm font-mono text-acg-pink mb-2 tracking-widest uppercase">Dev Log</div>
+				<h1 class="text-3xl md:text-5xl font-black mb-4">{title}</h1>
+				<div class="text-sm opacity-60 flex justify-center gap-4 items-center">
+					<span>📅 {formattedDate}</span>
+					<span>📝 {description}</span>
+				</div>
+				<hr class="my-8 border-gray-400/30" />
+			</div>
+
+			<!-- 正文区域：Typography 排版优化 -->
+			<div class="px-6 md:px-12 pb-12 prose prose-lg dark:prose-invert max-w-none 
+                prose-headings:font-bold prose-headings:text-acg-blue 
+                prose-a:text-acg-pink prose-a:no-underline hover:prose-a:underline
+                prose-img:rounded-xl prose-img:shadow-lg">
+				<slot />
+			</div>
+		</article>
+	</main>
+</Layout>

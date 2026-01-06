@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro'; // 复用之前的文章布局，或者你可以复制一份改名为 DevLogPost 单独设计
+
+export async function getStaticPaths() {
+	const posts = await getCollection('devlog'); // 这里读取 devlog
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<!-- 可以在这里传入特殊的 class 或标识，告诉 Layout 这是开发日志 -->
+<BlogPost {...post.data}>
+    <!-- 这里可以加一个提示条 -->
+    <div class="not-prose mb-8 p-4 bg-yellow-500/10 border border-yellow-500 rounded text-yellow-500 text-sm font-mono">
+        ⚠ 当前版本: {post.data.version} | 引擎: {post.data.engine}
+    </div>
+	<Content />
+</BlogPost>

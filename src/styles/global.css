@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 定义图层 */
+@layer base {
+  body {
+    @apply transition-colors duration-700 ease-in-out; /* 极其平滑的日夜切换 */
+  }
+
+  /* 白天背景：建议找一张明亮的二次元风景图 */
+  body:not(.dark) {
+    background-image:url(/images/wallhaven-zywzdy_1920x1080.png); /* 示例图 */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+  }
+
+  /* 黑夜背景：建议找一张赛博都市或星空图 */
+  .dark body {
+    background-image:url(/images/wallhaven-x6l7vv_1920x1080.png) ; /* 示例图 */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+  }
+}
+
+@layer components {
+  /* === 核心：万能玻璃拟态类 === */
+  .glass-panel {
+    @apply backdrop-blur-xl border border-white/30 shadow-lg transition-all duration-300;
+    /* 白天 */
+    @apply bg-white/60 text-slate-800;
+  }
+  
+  .dark .glass-panel {
+    /* 黑夜 */
+    @apply bg-slate-900/60 border-white/10 text-slate-100 shadow-[0_0_15px_rgba(0,229,255,0.1)];
+  }
+
+  /* 按钮样式 */
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg font-bold transition-all duration-200;
+    @apply bg-slate-800 text-white hover:bg-acg-pink hover:shadow-[4px_4px_0px_#00e5ff] hover:-translate-y-1;
+  }
+  
+  .dark .btn-primary {
+    @apply bg-white text-slate-900 hover:bg-acg-blue hover:shadow-[4px_4px_0px_#ff0055];
+  }
+}

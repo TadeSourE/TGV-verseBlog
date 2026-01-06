@@ -1,0 +1,43 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// 获取 devlog 集合，而不是 blog
+const logs = (await getCollection('devlog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout title="游戏开发日志 | DevLogs">
+	<main class="pt-32 px-4 md:px-20 max-w-5xl mx-auto min-h-screen">
+        <div class="flex items-center gap-4 mb-12">
+            <h1 class="text-4xl font-black text-acg-pink">游戏开发日志</h1>
+            <div class="px-3 py-1 bg-acg-pink/20 text-acg-pink border border-acg-pink rounded text-xs font-mono">
+                DEV_LOGS
+            </div>
+        </div>
+
+        <!-- 另一种风格的列表：更像更新日志 (Changelog) -->
+        <div class="space-y-8">
+            {logs.map((log) => (
+                <a href={`/devlog/${log.slug}/`} class="block group">
+                    <div class="glass-panel p-6 rounded-xl border-l-4 border-acg-pink hover:bg-acg-pink/10 transition-all">
+                        <div class="flex justify-between items-start mb-2">
+                            <h2 class="text-2xl font-bold group-hover:text-acg-pink transition-colors">
+                                {log.data.title}
+                            </h2>
+                            <span class="font-mono text-xs bg-slate-800 text-white px-2 py-1 rounded">
+                                {log.data.version || 'v1.0'}
+                            </span>
+                        </div>
+                        <div class="flex gap-4 text-sm opacity-60 font-mono mb-4">
+                            <span>📅 {log.data.pubDate.toLocaleDateString()}</span>
+                            <span>🎮 Engine: {log.data.engine || 'General'}</span>
+                        </div>
+                        <p class="opacity-80">{log.data.description}</p>
+                    </div>
+                </a>
+            ))}
+        </div>
+	</main>
+</Layout>
